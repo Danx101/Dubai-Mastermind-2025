@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Play, Pause } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 export default function Aftermovie() {
   const ref = useRef(null);
