@@ -30,15 +30,16 @@ export default function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Video */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 bg-black">
         <video
           autoPlay
           loop
           muted
           playsInline
+          preload="auto"
           className="h-full w-full object-cover"
         >
-          <source src="https://pub-22ab982ea82442468580abd2f856f17a.r2.dev/Loop Mastermind.mp4" type="video/mp4" />
+          <source src="/media/Loop Mastermind.mp4" type="video/mp4" />
         </video>
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
