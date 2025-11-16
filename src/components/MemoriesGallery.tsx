@@ -4,15 +4,18 @@ import { useRef, useState } from 'react';
 import { X } from 'lucide-react';
 
 const galleryImages = [
-  { src: '/media/C0101.00_00_32_20.Standbild026.png', alt: 'Mastermind Moment 1' },
-  { src: '/media/Copy of C0101.00_00_23_05.Standbild035.png', alt: 'Mastermind Moment 2' },
-  { src: '/media/Copy of C0101.00_00_34_17.Standbild027.png', alt: 'Mastermind Moment 3' },
-  { src: '/media/Copy of C0101.00_00_41_18.Standbild031.png', alt: 'Mastermind Moment 4' },
-  { src: '/media/Copy of C0101.00_01_10_03.Standbild016.png', alt: 'Mastermind Moment 5' },
-  { src: '/media/Copy of C0101.00_01_18_03.Standbild010.png', alt: 'Mastermind Moment 6' },
-  { src: '/media/Copy of C0101.00_01_20_20.Standbild013.png', alt: 'Mastermind Moment 7' },
-  { src: '/media/Copy of C0101.00_01_38_17.Standbild021.png', alt: 'Mastermind Moment 8' },
-  { src: '/media/DSC02482(1).jpg', alt: 'Mastermind Moment 9' },
+  { src: '/media/2025_01_10_Dubai Yacht-001.jpg', alt: 'Dubai Mastermind Yacht Event' },
+  { src: '/media/2025_01_10_Dubai Yacht-004.jpg', alt: 'Dubai Mastermind Networking' },
+  { src: '/media/2025_01_10_Dubai Yacht-005.jpg', alt: 'Dubai Mastermind Experience' },
+  { src: '/media/2025_01_10_Dubai Yacht-015.jpg', alt: 'Dubai Mastermind Group' },
+  { src: '/media/2025_01_10_Dubai Yacht-022.jpg', alt: 'Dubai Mastermind Insights' },
+  { src: '/media/2025_01_10_Dubai Yacht-033.jpg', alt: 'Dubai Mastermind Session' },
+  { src: '/media/2025_01_10_Dubai Yacht-035.jpg', alt: 'Dubai Mastermind Atmosphere' },
+  { src: '/media/2025_01_10_Dubai Yacht-036.jpg', alt: 'Dubai Mastermind Connection' },
+  { src: '/media/2025_01_10_Dubai Yacht-039.jpg', alt: 'Dubai Mastermind Community' },
+  { src: '/media/2025_01_10_Dubai Yacht-043.jpg', alt: 'Dubai Mastermind Moments' },
+  { src: '/media/2025_01_10_Dubai Yacht-046.jpg', alt: 'Dubai Mastermind Transformation' },
+  { src: '/media/2025_01_10_Dubai Yacht-053.jpg', alt: 'Dubai Mastermind Excellence' },
 ];
 
 export default function MemoriesGallery() {
@@ -21,7 +24,7 @@ export default function MemoriesGallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <section ref={ref} className="bg-gradient-to-b from-white to-parchment-50 py-20 px-4 md:py-32">
+    <section ref={ref} className="bg-gradient-to-b from-white to-purple-50 py-20 px-4 md:pt-16 md:pb-32">
       <div className="mx-auto max-w-7xl">
         {/* Section Title */}
         <motion.div
@@ -32,13 +35,13 @@ export default function MemoriesGallery() {
         >
           <h2 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
             Erinnerungen an{' '}
-            <span className="bg-gradient-to-r from-navy-600 to-gold-500 bg-clip-text text-transparent">
-              das letzte Mastermind
+            <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+              die letzte Mastermind
             </span>
           </h2>
-          <div className="mx-auto h-1 w-24 bg-gradient-to-r from-navy-600 to-gold-500" />
+          <div className="mx-auto h-1 w-24 bg-gradient-to-r from-purple-600 to-purple-400" />
           <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
-            Erleben Sie unvergessliche Momente, tiefgehende Gespräche und transformative Erkenntnisse aus
+            Erlebe unvergessliche Momente, tiefgehende Gespräche und transformative Erkenntnisse aus
             unserem letzten exklusiven Mastermind in Dubai.
           </p>
         </motion.div>

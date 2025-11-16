@@ -21,7 +21,7 @@ export default function Aftermovie() {
   };
 
   return (
-    <section ref={ref} className="bg-gradient-to-b from-gray-900 to-black py-20 px-4 md:py-32">
+    <section ref={ref} className="bg-gradient-to-b from-purple-700 via-purple-600 to-purple-500 py-20 px-4 md:py-32">
       <div className="mx-auto max-w-6xl">
         {/* Section Title */}
         <motion.div
@@ -31,14 +31,14 @@ export default function Aftermovie() {
           className="mb-12 text-center"
         >
           <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-            Erleben Sie die{' '}
-            <span className="bg-gradient-to-r from-navy-400 to-gold-400 bg-clip-text text-transparent">
+            Erlebe die{' '}
+            <span className="bg-gradient-to-r from-purple-300 to-purple-400 bg-clip-text text-transparent">
               Atmosphäre
             </span>
           </h2>
-          <div className="mx-auto h-1 w-24 bg-gradient-to-r from-navy-500 to-gold-500" />
-          <p className="mt-6 text-lg text-gray-300">
-            Tauchen Sie ein in die einzigartige Energie unseres letzten Masterminds
+          <div className="mx-auto h-1 w-24 bg-gradient-to-r from-purple-400 to-purple-500" />
+          <p className="mt-6 text-xl font-semibold text-white">
+            Tauche ein in die einzigartige Energie unseres letzten Masterminds
           </p>
         </motion.div>
 
@@ -73,7 +73,7 @@ export default function Aftermovie() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-navy-500 to-navy-600 text-white shadow-2xl transition-all hover:shadow-navy-500/50 md:h-24 md:w-24"
+                className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-2xl transition-all hover:shadow-purple-500/50 md:h-24 md:w-24"
               >
                 <Play className="h-10 w-10 md:h-12 md:w-12" fill="currentColor" />
               </motion.button>
@@ -88,52 +88,62 @@ export default function Aftermovie() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-12"
         >
-          <div className="rounded-2xl bg-gradient-to-br from-navy-900/40 to-gold-900/20 backdrop-blur-sm border border-gold-500/20 p-8 md:p-12">
-            <h3 className="mb-6 text-3xl font-bold text-white text-center">
-              Was Sie erwartet
+          <div
+            className="rounded-2xl backdrop-blur-md border border-white/20 p-8 md:p-12 relative overflow-hidden"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              boxShadow: '0 8px 32px 0 rgba(147, 51, 234, 0.2)',
+            }}
+          >
+            {/* Glassmorphism effect layers */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tl from-purple-500/10 to-transparent pointer-events-none" />
+
+            <h3 className="mb-6 text-3xl font-bold text-white text-center relative z-10">
+              Was dich erwartet
             </h3>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2 relative z-10">
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-2">
-                  <div className="h-3 w-3 rounded-full bg-gold-500" />
+                  <div className="h-3 w-3 rounded-full bg-purple-400" />
                 </div>
                 <div>
                   <h4 className="mb-2 font-semibold text-white text-xl">Intensive Workshops</h4>
-                  <p className="text-gray-300">
+                  <p className="text-purple-100">
                     Praxisnahe Sessions zu Business-Strategien und persönlicher Entwicklung
                   </p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-2">
-                  <div className="h-3 w-3 rounded-full bg-gold-500" />
+                  <div className="h-3 w-3 rounded-full bg-purple-400" />
                 </div>
                 <div>
                   <h4 className="mb-2 font-semibold text-white text-xl">Networking</h4>
-                  <p className="text-gray-300">
+                  <p className="text-purple-100">
                     Austausch mit gleichgesinnten Partnern auf höchstem Niveau
                   </p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-2">
-                  <div className="h-3 w-3 rounded-full bg-gold-500" />
+                  <div className="h-3 w-3 rounded-full bg-purple-400" />
                 </div>
                 <div>
                   <h4 className="mb-2 font-semibold text-white text-xl">Persönliche Betreuung</h4>
-                  <p className="text-gray-300">
+                  <p className="text-purple-100">
                     Individuelles Coaching und Feedback von Chris Steiner
                   </p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-2">
-                  <div className="h-3 w-3 rounded-full bg-gold-500" />
+                  <div className="h-3 w-3 rounded-full bg-purple-400" />
                 </div>
                 <div>
-                  <h4 className="mb-2 font-semibold text-white text-xl">Dubai-Erlebnis</h4>
-                  <p className="text-gray-300">
-                    Exklusive Einblicke in die Business-Welt von Dubai
+                  <h4 className="mb-2 font-semibold text-white text-xl">Exklusive Location</h4>
+                  <p className="text-purple-100">
+                    Einzigartige Räumlichkeiten an besonderem Ort
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Madefor+Display:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -34,13 +34,13 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Madefor Display', Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Madefor Display', Helvetica, Arial, sans-serif;
   }
 }
 
@@ -56,13 +56,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-parchment-100;
+  @apply bg-purple-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-navy-600 rounded-full;
+  @apply bg-purple-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-navy-700;
+  @apply bg-purple-700;
 }

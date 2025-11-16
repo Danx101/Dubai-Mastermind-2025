@@ -1,28 +1,31 @@
 import { useEffect } from 'react';
-import Hero from './components/Hero';
-import EventDetails from './components/EventDetails';
-import PricingSection from './components/PricingSection';
-import Aftermovie from './components/Aftermovie';
-import MemoriesGallery from './components/MemoriesGallery';
-import ApplicationForm from './components/ApplicationForm';
-import Footer from './components/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ApplicationPage from './pages/ApplicationPage';
 
 function App() {
   useEffect(() => {
     // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Prevent auto-scroll to hash on initial load
+    if (window.location.hash) {
+      // Clear hash without scrolling
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Hero />
-      <EventDetails />
-      <Aftermovie />
-      <PricingSection />
-      <ApplicationForm />
-      <MemoriesGallery />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-white">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/bewerbung" element={<ApplicationPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
