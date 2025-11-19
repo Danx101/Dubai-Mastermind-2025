@@ -63,7 +63,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (dbError) {
       console.error('Database error:', dbError);
-      return res.status(500).json({ error: 'Failed to save application' });
+      console.error('Error details:', JSON.stringify(dbError, null, 2));
+      return res.status(500).json({
+        error: 'Failed to save application',
+        details: dbError.message,
+        code: dbError.code
+      });
     }
 
     // Send email notification to admin
