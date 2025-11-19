@@ -9,11 +9,12 @@ import {
   Search,
   Filter,
   Eye,
+  Euro,
 } from 'lucide-react';
 
 // Initialize Supabase client (using anon key for read-only access)
 const supabase = createClient(
-  'https://mastermind-2026.supabase.co',
+  'https://jysuiirrqxplhryyoyeg.supabase.co',
   'sb_publishable_4sEo7Ji74Xj0x54JeDz07w_oRssSPv0'
 );
 
@@ -137,6 +138,12 @@ export default function AdminDashboard() {
     pending: applications.filter((app) => app.payment_status === 'pending').length,
     completed: applications.filter((app) => app.payment_status === 'completed').length,
     totalTickets: applications.reduce((sum, app) => sum + app.quantity, 0),
+    totalRevenue: applications
+      .filter((app) => app.payment_status === 'completed')
+      .reduce((sum, app) => {
+        const price = app.package_type === 'A' ? 100 : 200;
+        return sum + price * app.quantity;
+      }, 0),
   };
 
   if (isLoading) {
@@ -150,7 +157,7 @@ export default function AdminDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <StatCard
           icon={<Users className="h-6 w-6" />}
           label="Gesamt Bewerbungen"
@@ -174,6 +181,12 @@ export default function AdminDashboard() {
           label="Bezahlt"
           value={stats.completed}
           color="green"
+        />
+        <StatCard
+          icon={<Euro className="h-6 w-6" />}
+          label="Gesamtumsatz"
+          value={`€${stats.totalRevenue.toLocaleString('de-DE')}`}
+          color="emerald"
         />
       </div>
 
@@ -345,7 +358,7 @@ function StatCard({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: number;
+  value: number | string;
   color: string;
 }) {
   const colorClasses = {
@@ -353,6 +366,7 @@ function StatCard({
     blue: 'bg-blue-100 text-blue-600',
     indigo: 'bg-indigo-100 text-indigo-600',
     green: 'bg-green-100 text-green-600',
+    emerald: 'bg-emerald-100 text-emerald-600',
   };
 
   return (
