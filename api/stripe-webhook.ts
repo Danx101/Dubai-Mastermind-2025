@@ -102,7 +102,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           // Send admin notification
           try {
             await resend.emails.send({
-              from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
+              from: 'Chris Steiner Mastermind <noreply@ail-studios.com>',
               to: 'veoproai@gmail.com',
               subject: `Neue Mastermind Bewerbung - ${emailData.firstName} ${emailData.lastName}`,
               html: getAdminNotificationEmail(emailData),
@@ -115,7 +115,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           // Send applicant confirmation
           try {
             await resend.emails.send({
-              from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
+              from: 'Chris Steiner Mastermind <noreply@ail-studios.com>',
               to: application.email,
               subject: 'Deine Mastermind Bewerbung wurde bestätigt',
               html: getApplicantConfirmationEmail(emailData),
