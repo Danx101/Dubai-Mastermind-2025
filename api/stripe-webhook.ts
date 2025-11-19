@@ -44,20 +44,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // In production, you MUST set STRIPE_WEBHOOK_SECRET
     let event: Stripe.Event;
 
-    if (process.env.STRIPE_WEBHOOK_SECRET) {
-      try {
-        event = stripe.webhooks.constructEvent(
-          rawBody,
-          sig,
-          process.env.STRIPE_WEBHOOK_SECRET
-        );
-      } catch (err) {
-        console.error('Webhook signature verification failed:', err);
-        return res.status(400).json({ error: 'Invalid signature' });
-      }
-    } else {
-      // For testing only - parse the event without verification
-      event = JSON.parse(rawBody.toString());
+    if (!process.env.STRIPE_WEBHOOK_SECRET) {
+      console.error('STRIPE_WEBHOOK_SECRET is not configured');
+      return res.status(500).json({ error: 'Webhook not configured' });
+    }
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        rawBody,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err);
+      return res.status(400).json({ error: 'Invalid signature' });
     }
 
     // Handle the event
@@ -100,10 +100,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           };
 
           // Send admin notification
+          const adminEmail = process.env.ADMIN_EMAIL || 'jc@abnehmenimliegen.at';
           try {
             await resend.emails.send({
               from: 'Chris Steiner Mastermind <noreply@ail-studios.com>',
-              to: 'jc@abnehmenimliegen.at',
+              to: adminEmail,
               subject: `Neue Mastermind Bewerbung - ${emailData.firstName} ${emailData.lastName}`,
               html: getAdminNotificationEmail(emailData),
             });

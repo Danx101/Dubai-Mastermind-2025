@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 // CORS headers
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://mastermind.abnehmenimliegen-info.com',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
@@ -30,10 +30,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Validate package type and get Stripe Price ID
-    const stripePriceIds = {
-      A: 'price_1SVBC5QWW6xnVn1lbHeoUlsz', // Package A - €100
-      B: 'price_1SVBENQWW6xnVn1lHJoMnUd7', // Package B - €200
+    // Validate package type and get Stripe Price ID from environment
+    const stripePriceIds: Record<string, string | undefined> = {
+      A: process.env.STRIPE_PRICE_A,
+      B: process.env.STRIPE_PRICE_B,
     };
 
     if (packageType !== 'A' && packageType !== 'B') {
@@ -41,6 +41,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const priceId = stripePriceIds[packageType];
+
+    if (!priceId) {
+      console.error(`Missing Stripe price ID for package ${packageType}`);
+      return res.status(500).json({ error: 'Payment configuration error' });
+    }
 
     // Get the host from the request
     const host = req.headers.host || 'localhost:3000';
@@ -74,8 +79,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error) {
     console.error('Stripe error:', error);
     return res.status(500).json({
-      error: 'Failed to create checkout session',
-      message: error instanceof Error ? error.message : 'Unknown error'
+      error: 'Failed to create checkout session'
     });
   }
 }

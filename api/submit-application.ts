@@ -9,7 +9,7 @@ const supabase = createClient(
 
 // CORS headers
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://mastermind.abnehmenimliegen-info.com',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
@@ -62,9 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.error('Database error:', dbError);
       console.error('Error details:', JSON.stringify(dbError, null, 2));
       return res.status(500).json({
-        error: 'Failed to save application',
-        details: dbError.message,
-        code: dbError.code
+        error: 'Failed to save application'
       });
     }
 

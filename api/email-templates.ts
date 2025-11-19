@@ -10,6 +10,18 @@ interface ApplicationData {
   createdAt: string;
 }
 
+// HTML escape function to prevent XSS
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, (char) => map[char]);
+}
+
 // Email styles
 const emailStyles = `
   body {
@@ -149,15 +161,15 @@ export function getAdminNotificationEmail(data: ApplicationData): string {
             <h3>Persönliche Informationen</h3>
             <div class="info-row">
               <span class="info-label">Name</span>
-              <span class="info-value">${data.firstName} ${data.lastName}</span>
+              <span class="info-value">${escapeHtml(data.firstName)} ${escapeHtml(data.lastName)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">E-Mail</span>
-              <span class="info-value">${data.email}</span>
+              <span class="info-value">${escapeHtml(data.email)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Telefon</span>
-              <span class="info-value">${data.phone}</span>
+              <span class="info-value">${escapeHtml(data.phone)}</span>
             </div>
           </div>
 
@@ -165,7 +177,7 @@ export function getAdminNotificationEmail(data: ApplicationData): string {
             <h3>Paket-Details</h3>
             <div class="info-row">
               <span class="info-label">Gewähltes Paket</span>
-              <span class="info-value">Paket ${data.packageType}</span>
+              <span class="info-value">Paket ${escapeHtml(data.packageType)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Anzahl Tickets</span>
@@ -179,7 +191,7 @@ export function getAdminNotificationEmail(data: ApplicationData): string {
 
           <div class="message-box">
             <h3 style="margin: 0 0 12px 0; color: #a98dc1;">Bewerbungsnachricht:</h3>
-            <p style="white-space: pre-wrap; margin: 0; color: #374151;">${data.message}</p>
+            <p style="white-space: pre-wrap; margin: 0; color: #374151;">${escapeHtml(data.message)}</p>
           </div>
 
           <div class="warning-box">
@@ -221,7 +233,7 @@ export function getApplicantConfirmationEmail(data: ApplicationData): string {
 
         <div class="content">
           <p style="font-size: 18px; margin-bottom: 8px;">
-            Hallo ${data.firstName},
+            Hallo ${escapeHtml(data.firstName)},
           </p>
           <p style="font-size: 16px; color: #6b7280; margin-bottom: 24px;">
             vielen Dank für deine Bewerbung zur exklusiven Mastermind in Dubai!
@@ -231,7 +243,7 @@ export function getApplicantConfirmationEmail(data: ApplicationData): string {
             <h3>Deine Bewerbungsdetails</h3>
             <div class="info-row">
               <span class="info-label">Paket</span>
-              <span class="info-value">Paket ${data.packageType}</span>
+              <span class="info-value">Paket ${escapeHtml(data.packageType)}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Anzahl Tickets</span>

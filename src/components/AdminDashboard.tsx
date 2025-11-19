@@ -14,8 +14,8 @@ import {
 
 // Initialize Supabase client (using anon key for read-only access)
 const supabase = createClient(
-  'https://jysuiirrqxplhryyoyeg.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp5c3VpaXJycXhwbGhyeXlveWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1MzAzNjMsImV4cCI6MjA3OTEwNjM2M30.PBeEqkFxWwjn7sFrXN_fpOdoe2onUP1itac5Nj5ukL4'
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
 interface Application {
