@@ -73,8 +73,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Send email notification to admin
+    let adminEmailSent = false;
     try {
-      await resend.emails.send({
+      const adminEmailResult = await resend.emails.send({
         from: 'Mastermind Applications <onboarding@resend.dev>',
         to: 'danielgevel0208@gmail.com',
         subject: `Neue Mastermind Bewerbung - ${firstName} ${lastName}`,
@@ -90,8 +91,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           createdAt: new Date(application.created_at).toLocaleString('de-DE'),
         }),
       });
+      console.log('Admin email sent:', adminEmailResult);
+      adminEmailSent = true;
     } catch (emailError) {
-      console.error('Email error:', emailError);
+      console.error('Admin email error:', emailError);
       // Don't fail the request if email fails - application is already saved
     }
 
@@ -121,6 +124,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       success: true,
       applicationId: application.id,
       message: 'Application submitted successfully',
+      adminEmailSent,
     });
   } catch (error) {
     console.error('Unexpected error:', error);

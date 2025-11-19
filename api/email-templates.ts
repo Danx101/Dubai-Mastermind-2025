@@ -29,7 +29,7 @@ const emailStyles = `
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   .header {
-    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+    background: linear-gradient(135deg, #a98dc1 0%, #8e73a8 100%);
     padding: 40px 30px;
     text-align: center;
     color: #ffffff;
@@ -44,32 +44,40 @@ const emailStyles = `
   }
   .info-box {
     background: #f9fafb;
-    border-left: 4px solid #9333ea;
+    border-left: 4px solid #a98dc1;
     padding: 20px;
     margin: 20px 0;
     border-radius: 4px;
   }
   .info-box h3 {
-    margin: 0 0 12px 0;
-    color: #9333ea;
-    font-size: 16px;
+    margin: 0 0 16px 0;
+    color: #a98dc1;
+    font-size: 18px;
     font-weight: 600;
   }
   .info-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #e5e7eb;
+    font-size: 15px;
   }
   .info-row:last-child {
     border-bottom: none;
   }
   .info-label {
     font-weight: 600;
-    color: #6b7280;
+    color: #374151;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  .info-label:after {
+    content: ": ";
+    margin-right: 8px;
   }
   .info-value {
     color: #111827;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 400;
   }
   .message-box {
     background: #f9fafb;
@@ -78,15 +86,15 @@ const emailStyles = `
     margin: 20px 0;
   }
   .warning-box {
-    background: #fef3c7;
-    border-left: 4px solid #f59e0b;
+    background: #f3f4f6;
+    border-left: 4px solid #6b7280;
     padding: 20px;
     margin: 20px 0;
     border-radius: 4px;
   }
   .warning-box p {
     margin: 0;
-    color: #92400e;
+    color: #374151;
     font-size: 14px;
   }
   .footer {
@@ -103,7 +111,7 @@ const emailStyles = `
   .button {
     display: inline-block;
     padding: 14px 28px;
-    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%);
+    background: linear-gradient(135deg, #a98dc1 0%, #8e73a8 100%);
     color: #ffffff;
     text-decoration: none;
     border-radius: 8px;
@@ -135,15 +143,15 @@ export function getAdminNotificationEmail(data: ApplicationData): string {
           <div class="info-box">
             <h3>Persönliche Informationen</h3>
             <div class="info-row">
-              <span class="info-label">Name:</span>
+              <span class="info-label">Name</span>
               <span class="info-value">${data.firstName} ${data.lastName}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">E-Mail:</span>
+              <span class="info-label">E-Mail</span>
               <span class="info-value">${data.email}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Telefon:</span>
+              <span class="info-label">Telefon</span>
               <span class="info-value">${data.phone}</span>
             </div>
           </div>
@@ -151,21 +159,21 @@ export function getAdminNotificationEmail(data: ApplicationData): string {
           <div class="info-box">
             <h3>Paket-Details</h3>
             <div class="info-row">
-              <span class="info-label">Gewähltes Paket:</span>
+              <span class="info-label">Gewähltes Paket</span>
               <span class="info-value">Paket ${data.packageType}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Anzahl Tickets:</span>
+              <span class="info-label">Anzahl Tickets</span>
               <span class="info-value">${data.quantity}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Gesamtbetrag:</span>
+              <span class="info-label">Gesamtbetrag</span>
               <span class="info-value">€${(data.packageType === 'A' ? 100 : 200) * data.quantity}</span>
             </div>
           </div>
 
           <div class="message-box">
-            <h3 style="margin: 0 0 12px 0; color: #9333ea;">Bewerbungsnachricht:</h3>
+            <h3 style="margin: 0 0 12px 0; color: #a98dc1;">Bewerbungsnachricht:</h3>
             <p style="white-space: pre-wrap; margin: 0; color: #374151;">${data.message}</p>
           </div>
 
@@ -217,15 +225,15 @@ export function getApplicantConfirmationEmail(data: ApplicationData): string {
           <div class="info-box">
             <h3>Deine Bewerbungsdetails</h3>
             <div class="info-row">
-              <span class="info-label">Paket:</span>
+              <span class="info-label">Paket</span>
               <span class="info-value">Paket ${data.packageType}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Anzahl Tickets:</span>
+              <span class="info-label">Anzahl Tickets</span>
               <span class="info-value">${data.quantity}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Gezahlter Betrag:</span>
+              <span class="info-label">Gezahlter Betrag</span>
               <span class="info-value">€${(data.packageType === 'A' ? 100 : 200) * data.quantity}</span>
             </div>
           </div>
@@ -238,7 +246,7 @@ export function getApplicantConfirmationEmail(data: ApplicationData): string {
             </p>
           </div>
 
-          <h3 style="color: #9333ea; margin-top: 32px;">Was passiert als Nächstes?</h3>
+          <h3 style="color: #a98dc1; margin-top: 32px;">Was passiert als Nächstes?</h3>
           <ol style="color: #374151; line-height: 1.8;">
             <li>Wir prüfen deine Bewerbung sorgfältig</li>
             <li>Du erhältst innerhalb von 48 Stunden eine Rückmeldung</li>
@@ -248,7 +256,7 @@ export function getApplicantConfirmationEmail(data: ApplicationData): string {
 
           <p style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
             Bei Fragen erreichst du uns jederzeit unter:<br>
-            <strong style="color: #9333ea;">danielgevel0208@gmail.com</strong>
+            <strong style="color: #a98dc1;">jc@abnehmenimliegen.at</strong>
           </p>
 
           <p style="margin-top: 24px; color: #6b7280;">
@@ -340,7 +348,7 @@ export function getApplicationRejectionEmail(data: {
 
         <div class="footer">
           <p style="font-size: 12px;">
-            Bei Fragen zur Rückerstattung: danielgevel0208@gmail.com
+            Bei Fragen zur Rückerstattung: jc@abnehmenimliegen.at
           </p>
         </div>
       </div>

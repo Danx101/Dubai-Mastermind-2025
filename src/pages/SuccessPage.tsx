@@ -66,7 +66,7 @@ export default function SuccessPage() {
                 <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                   3
                 </span>
-                <span>Bei Fragen erreichst du uns jederzeit unter danielgevel0208@gmail.com</span>
+                <span>Bei Fragen erreichst du uns jederzeit unter jc@abnehmenimliegen.at</span>
               </li>
             </ul>
           </motion.div>
