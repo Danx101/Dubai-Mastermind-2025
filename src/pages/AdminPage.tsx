@@ -10,33 +10,69 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if already logged in
-    const adminSession = sessionStorage.getItem('admin_authenticated');
-    if (adminSession === 'true') {
-      setIsAuthenticated(true);
-    }
-    setIsLoading(false);
+    // Check if already logged in by verifying token
+    const verifyToken = async () => {
+      const token = localStorage.getItem('admin_token');
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/verify-admin', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          setIsAuthenticated(true);
+        } else {
+          // Token invalid or expired, remove it
+          localStorage.removeItem('admin_token');
+        }
+      } catch (error) {
+        console.error('Token verification failed:', error);
+        localStorage.removeItem('admin_token');
+      }
+      setIsLoading(false);
+    };
+
+    verifyToken();
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Simple password check (you'll set this in Vercel env variables)
-    // For now, we'll use a hardcoded password - replace in production
-    const ADMIN_PASSWORD = 'Mastermind2026!'; // TODO: Move to env variable
+    try {
+      const response = await fetch('/api/admin-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
 
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem('admin_authenticated', 'true');
-      setIsAuthenticated(true);
-    } else {
-      setError('Falsches Passwort');
+      const data = await response.json();
+
+      if (response.ok && data.token) {
+        localStorage.setItem('admin_token', data.token);
+        setIsAuthenticated(true);
+      } else {
+        setError(data.error || 'Falsches Passwort');
+        setPassword('');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setError('Anmeldung fehlgeschlagen');
       setPassword('');
     }
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('admin_authenticated');
+    localStorage.removeItem('admin_token');
     setIsAuthenticated(false);
   };
 
