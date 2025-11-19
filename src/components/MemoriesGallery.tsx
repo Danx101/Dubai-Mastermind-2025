@@ -5,17 +5,23 @@ import { X } from 'lucide-react';
 
 const galleryImages = [
   { src: '/media/2025_01_10_Dubai Yacht-001.jpg', alt: 'Dubai Mastermind Yacht Event' },
+  { src: '/media/2025_01_10_Dubai Yacht-002.jpg', alt: 'Dubai Mastermind Moments' },
+  { src: '/media/2025_01_10_Dubai Yacht-003.jpg', alt: 'Dubai Mastermind Experience' },
   { src: '/media/2025_01_10_Dubai Yacht-004.jpg', alt: 'Dubai Mastermind Networking' },
-  { src: '/media/2025_01_10_Dubai Yacht-005.jpg', alt: 'Dubai Mastermind Experience' },
-  { src: '/media/2025_01_10_Dubai Yacht-015.jpg', alt: 'Dubai Mastermind Group' },
-  { src: '/media/2025_01_10_Dubai Yacht-022.jpg', alt: 'Dubai Mastermind Insights' },
-  { src: '/media/2025_01_10_Dubai Yacht-033.jpg', alt: 'Dubai Mastermind Session' },
-  { src: '/media/2025_01_10_Dubai Yacht-035.jpg', alt: 'Dubai Mastermind Atmosphere' },
-  { src: '/media/2025_01_10_Dubai Yacht-036.jpg', alt: 'Dubai Mastermind Connection' },
-  { src: '/media/2025_01_10_Dubai Yacht-039.jpg', alt: 'Dubai Mastermind Community' },
+  { src: '/media/2025_01_10_Dubai Yacht-005.jpg', alt: 'Dubai Mastermind Group' },
+  { src: '/media/2025_01_10_Dubai Yacht-013.jpg', alt: 'Dubai Mastermind Insights' },
+  { src: '/media/2025_01_10_Dubai Yacht-022.jpg', alt: 'Dubai Mastermind Session' },
+  { src: '/media/2025_01_10_Dubai Yacht-025.jpg', alt: 'Dubai Mastermind Atmosphere' },
+  { src: '/media/2025_01_10_Dubai Yacht-035.jpg', alt: 'Dubai Mastermind Connection' },
+  { src: '/media/2025_01_10_Dubai Yacht-040.jpg', alt: 'Dubai Mastermind Community' },
   { src: '/media/2025_01_10_Dubai Yacht-043.jpg', alt: 'Dubai Mastermind Moments' },
   { src: '/media/2025_01_10_Dubai Yacht-046.jpg', alt: 'Dubai Mastermind Transformation' },
   { src: '/media/2025_01_10_Dubai Yacht-053.jpg', alt: 'Dubai Mastermind Excellence' },
+  { src: '/media/2025_01_10_Dubai Yacht-077.jpg', alt: 'Dubai Mastermind Leadership' },
+  { src: '/media/2025_01_10_Dubai Yacht-082.jpg', alt: 'Dubai Mastermind Vision' },
+  { src: '/media/2025_01_10_Dubai Yacht-088.jpg', alt: 'Dubai Mastermind Success' },
+  { src: '/media/2025_01_10_Dubai Yacht-093.jpg', alt: 'Dubai Mastermind Journey' },
+  { src: '/media/2025_01_10_Dubai Yacht-094.jpg', alt: 'Dubai Mastermind Growth' },
 ];
 
 export default function MemoriesGallery() {
