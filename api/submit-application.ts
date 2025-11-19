@@ -76,7 +76,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let adminEmailSent = false;
     try {
       const adminEmailResult = await resend.emails.send({
-        from: 'Mastermind Applications <onboarding@resend.dev>',
+        from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
         to: 'danielgevel0208@gmail.com',
         subject: `Neue Mastermind Bewerbung - ${firstName} ${lastName}`,
         html: getAdminNotificationEmail({

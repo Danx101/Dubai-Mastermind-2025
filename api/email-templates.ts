@@ -61,6 +61,7 @@ const emailStyles = `
     padding: 10px 0;
     border-bottom: 1px solid #e5e7eb;
     font-size: 15px;
+    gap: 20px;
   }
   .info-row:last-child {
     border-bottom: none;
@@ -71,8 +72,7 @@ const emailStyles = `
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
   .info-label:after {
-    content: ": ";
-    margin-right: 8px;
+    content: ":";
   }
   .info-value {
     color: #111827;
