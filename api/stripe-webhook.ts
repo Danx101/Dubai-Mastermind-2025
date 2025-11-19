@@ -103,7 +103,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           try {
             await resend.emails.send({
               from: 'Chris Steiner Mastermind <noreply@ail-studios.com>',
-              to: 'veoproai@gmail.com',
+              to: 'jc@abnehmenimliegen.at',
               subject: `Neue Mastermind Bewerbung - ${emailData.firstName} ${emailData.lastName}`,
               html: getAdminNotificationEmail(emailData),
             });
