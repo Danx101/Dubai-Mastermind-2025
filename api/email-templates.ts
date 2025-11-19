@@ -56,28 +56,33 @@ const emailStyles = `
     font-weight: 600;
   }
   .info-row {
-    display: flex;
-    justify-content: space-between;
+    display: table;
+    width: 100%;
     padding: 10px 0;
     border-bottom: 1px solid #e5e7eb;
     font-size: 15px;
-    gap: 20px;
   }
   .info-row:last-child {
     border-bottom: none;
   }
   .info-label {
+    display: table-cell;
     font-weight: 600;
     color: #374151;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    padding-right: 20px;
+    white-space: nowrap;
   }
   .info-label:after {
     content: ":";
   }
   .info-value {
+    display: table-cell;
     color: #111827;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-weight: 400;
+    text-align: right;
+    width: 100%;
   }
   .message-box {
     background: #f9fafb;

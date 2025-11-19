@@ -1,6 +1,8 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { getAdminNotificationEmail, getApplicantConfirmationEmail } from './email-templates.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-11-17.clover',
@@ -10,6 +12,8 @@ const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_KEY!
 );
+
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export const config = {
   api: {
@@ -60,23 +64,68 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
+        const applicationId = session.metadata?.applicationId;
 
         // Update application in Supabase
-        const { error } = await supabase
+        const { data: application, error } = await supabase
           .from('applications')
           .update({
             payment_status: 'completed',
             stripe_payment_intent_id: session.payment_intent as string,
             total_amount: session.amount_total,
           })
-          .eq('id', session.metadata?.applicationId);
+          .eq('id', applicationId)
+          .select()
+          .single();
 
         if (error) {
           console.error('Failed to update application:', error);
           return res.status(500).json({ error: 'Failed to update application' });
         }
 
-        console.log('Payment completed for application:', session.metadata?.applicationId);
+        console.log('Payment completed for application:', applicationId);
+
+        // Send email notifications after successful payment
+        if (application) {
+          const emailData = {
+            firstName: application.first_name,
+            lastName: application.last_name,
+            email: application.email,
+            phone: application.phone,
+            packageType: application.package_type,
+            quantity: application.quantity,
+            message: application.message,
+            applicationId: application.id,
+            createdAt: new Date(application.created_at).toLocaleString('de-DE'),
+          };
+
+          // Send admin notification
+          try {
+            await resend.emails.send({
+              from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
+              to: 'veoproai@gmail.com',
+              subject: `Neue Mastermind Bewerbung - ${emailData.firstName} ${emailData.lastName}`,
+              html: getAdminNotificationEmail(emailData),
+            });
+            console.log('Admin email sent for application:', applicationId);
+          } catch (emailError) {
+            console.error('Admin email error:', emailError);
+          }
+
+          // Send applicant confirmation
+          try {
+            await resend.emails.send({
+              from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
+              to: application.email,
+              subject: 'Deine Mastermind Bewerbung wurde bestätigt',
+              html: getApplicantConfirmationEmail(emailData),
+            });
+            console.log('Applicant email sent for application:', applicationId);
+          } catch (emailError) {
+            console.error('Applicant email error:', emailError);
+          }
+        }
+
         break;
       }
 

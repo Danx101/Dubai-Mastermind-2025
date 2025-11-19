@@ -1,15 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
-import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getAdminNotificationEmail, getApplicantConfirmationEmail } from './email-templates.js';
 
-// Initialize clients
+// Initialize Supabase client
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_KEY!
 );
-
-const resend = new Resend(process.env.RESEND_API_KEY!);
 
 // CORS headers
 const corsHeaders = {
@@ -72,59 +68,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Send email notification to admin
-    let adminEmailSent = false;
-    try {
-      const adminEmailResult = await resend.emails.send({
-        from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
-        to: 'danielgevel0208@gmail.com',
-        subject: `Neue Mastermind Bewerbung - ${firstName} ${lastName}`,
-        html: getAdminNotificationEmail({
-          firstName,
-          lastName,
-          email,
-          phone,
-          packageType,
-          quantity,
-          message,
-          applicationId: application.id,
-          createdAt: new Date(application.created_at).toLocaleString('de-DE'),
-        }),
-      });
-      console.log('Admin email sent:', adminEmailResult);
-      adminEmailSent = true;
-    } catch (emailError) {
-      console.error('Admin email error:', emailError);
-      // Don't fail the request if email fails - application is already saved
-    }
-
-    // Send confirmation email to applicant
-    try {
-      await resend.emails.send({
-        from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
-        to: email,
-        subject: 'Deine Mastermind Bewerbung wurde erhalten',
-        html: getApplicantConfirmationEmail({
-          firstName,
-          lastName,
-          email,
-          phone,
-          packageType,
-          quantity,
-          message,
-          applicationId: application.id,
-          createdAt: new Date(application.created_at).toLocaleString('de-DE'),
-        }),
-      });
-    } catch (emailError) {
-      console.error('Confirmation email error:', emailError);
-    }
-
+    // Emails will be sent after payment completes via Stripe webhook
     return res.status(200).json({
       success: true,
       applicationId: application.id,
-      message: 'Application submitted successfully',
-      adminEmailSent,
+      message: 'Application saved successfully',
     });
   } catch (error) {
     console.error('Unexpected error:', error);
