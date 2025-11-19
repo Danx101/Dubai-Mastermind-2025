@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { getAdminNotificationEmail, getApplicantConfirmationEmail } from './email-templates';
 
 // Initialize clients
 const supabase = createClient(
@@ -75,31 +76,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
       await resend.emails.send({
         from: 'Mastermind Applications <onboarding@resend.dev>',
-        to: 'info@chrissteiner.at', // TODO: Replace with your actual email
+        to: 'danielgevel0208@gmail.com',
         subject: `Neue Mastermind Bewerbung - ${firstName} ${lastName}`,
-        html: `
-          <h2>Neue Bewerbung erhalten!</h2>
-
-          <h3>Persönliche Informationen:</h3>
-          <ul>
-            <li><strong>Name:</strong> ${firstName} ${lastName}</li>
-            <li><strong>E-Mail:</strong> ${email}</li>
-            <li><strong>Telefon:</strong> ${phone}</li>
-          </ul>
-
-          <h3>Paket-Details:</h3>
-          <ul>
-            <li><strong>Paket:</strong> ${packageType}</li>
-            <li><strong>Anzahl Tickets:</strong> ${quantity}</li>
-          </ul>
-
-          <h3>Nachricht:</h3>
-          <p>${message.replace(/\n/g, '<br>')}</p>
-
-          <hr>
-          <p><small>Application ID: ${application.id}</small></p>
-          <p><small>Eingereicht am: ${new Date(application.created_at).toLocaleString('de-DE')}</small></p>
-        `,
+        html: getAdminNotificationEmail({
+          firstName,
+          lastName,
+          email,
+          phone,
+          packageType,
+          quantity,
+          message,
+          applicationId: application.id,
+          createdAt: new Date(application.created_at).toLocaleString('de-DE'),
+        }),
       });
     } catch (emailError) {
       console.error('Email error:', emailError);
@@ -112,29 +101,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         from: 'Chris Steiner Mastermind <onboarding@resend.dev>',
         to: email,
         subject: 'Deine Mastermind Bewerbung wurde erhalten',
-        html: `
-          <h2>Vielen Dank für deine Bewerbung!</h2>
-
-          <p>Hallo ${firstName},</p>
-
-          <p>Wir haben deine Bewerbung für die exklusive Mastermind in Dubai erhalten.</p>
-
-          <h3>Deine Details:</h3>
-          <ul>
-            <li><strong>Paket:</strong> ${packageType}</li>
-            <li><strong>Anzahl Tickets:</strong> ${quantity}</li>
-          </ul>
-
-          <p>Wir werden uns in Kürze bei dir melden, um die nächsten Schritte zu besprechen.</p>
-
-          <p>Bei Fragen kannst du uns jederzeit unter info@chrissteiner.at erreichen.</p>
-
-          <p>Beste Grüße,<br>
-          Chris Steiner Team</p>
-
-          <hr>
-          <p><small>Application ID: ${application.id}</small></p>
-        `,
+        html: getApplicantConfirmationEmail({
+          firstName,
+          lastName,
+          email,
+          phone,
+          packageType,
+          quantity,
+          message,
+          applicationId: application.id,
+          createdAt: new Date(application.created_at).toLocaleString('de-DE'),
+        }),
       });
     } catch (emailError) {
       console.error('Confirmation email error:', emailError);

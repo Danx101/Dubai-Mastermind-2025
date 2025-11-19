@@ -34,11 +34,10 @@ export default function SuccessPage() {
             transition={{ delay: 0.4 }}
           >
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Zahlung erfolgreich!
+              Bewerbung erfolgreich eingereicht!
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              Vielen Dank für deine Bewerbung und Zahlung. Du hast erfolgreich einen Platz für die
-              exklusive Mastermind in Dubai gesichert!
+              Vielen Dank für deine Bewerbung und Zahlung. Deine Bewerbung wurde erfolgreich eingereicht!
             </p>
           </motion.div>
 
@@ -55,19 +54,19 @@ export default function SuccessPage() {
                 <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                   1
                 </span>
-                <span>Du erhältst eine Bestätigungs-E-Mail mit deiner Buchungsbestätigung</span>
+                <span>Du erhältst eine Bestätigungs-E-Mail mit deiner Bewerbungsbestätigung</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                   2
                 </span>
-                <span>Wir werden uns in Kürze mit weiteren Details zum Event melden</span>
+                <span>Wir werden uns in Kürze mit weiteren Details zu deiner Bewerbung melden</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
                   3
                 </span>
-                <span>Bei Fragen erreichst du uns jederzeit unter info@chrissteiner.at</span>
+                <span>Bei Fragen erreichst du uns jederzeit unter danielgevel0208@gmail.com</span>
               </li>
             </ul>
           </motion.div>
