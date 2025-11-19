@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSearchParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ApplicationForm from '../components/ApplicationForm';
@@ -8,6 +9,7 @@ import type { PackageType } from '../data/packages';
 export default function ApplicationPage() {
   const [searchParams] = useSearchParams();
   const packageParam = searchParams.get('package');
+  const [quantity, setQuantity] = useState(1);
 
   // Validate package parameter
   if (!packageParam || (packageParam !== 'A' && packageParam !== 'B')) {
@@ -44,12 +46,12 @@ export default function ApplicationPage() {
           <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
             {/* Cart Summary - Sticky on desktop */}
             <div>
-              <CartSummary packageType={packageType} />
+              <CartSummary packageType={packageType} quantity={quantity} setQuantity={setQuantity} />
             </div>
 
             {/* Application Form */}
             <div>
-              <ApplicationForm packageType={packageType} />
+              <ApplicationForm packageType={packageType} quantity={quantity} />
             </div>
           </div>
         </div>

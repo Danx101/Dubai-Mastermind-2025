@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Minus, Plus, Sparkles, Star } from 'lucide-react';
 import { packages } from '../data/packages';
@@ -6,10 +5,11 @@ import type { PackageType } from '../data/packages';
 
 interface CartSummaryProps {
   packageType: PackageType;
+  quantity: number;
+  setQuantity: (quantity: number) => void;
 }
 
-export default function CartSummary({ packageType }: CartSummaryProps) {
-  const [quantity, setQuantity] = useState(1);
+export default function CartSummary({ packageType, quantity, setQuantity }: CartSummaryProps) {
   const selectedPackage = packages[packageType];
 
   const handleIncrement = () => {

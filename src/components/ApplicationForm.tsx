@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import type { PackageType } from '../data/packages';
 
 const formSchema = z.object({
@@ -19,10 +19,12 @@ type FormData = z.infer<typeof formSchema>;
 
 interface ApplicationFormProps {
   packageType: PackageType;
+  quantity: number;
 }
 
-export default function ApplicationForm({ packageType }: ApplicationFormProps) {
+export default function ApplicationForm({ packageType, quantity }: ApplicationFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
@@ -34,35 +36,63 @@ export default function ApplicationForm({ packageType }: ApplicationFormProps) {
   });
 
   const onSubmit = async (data: FormData) => {
-    // Include package type in submission
-    const submissionData = {
-      ...data,
-      package: packageType,
-    };
+    setError(null);
 
-    // Simulate API call
-    console.log('Form Data:', submissionData);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const submissionData = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        packageType: packageType,
+        quantity: quantity,
+        message: `${data.motivation}${data.studio ? `\n\nStudio: ${data.studio}` : ''}`,
+      };
 
-    // TODO: Replace with actual API endpoint / payment redirect
-    // await fetch('/api/application', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(submissionData),
-    // });
+      const response = await fetch('/api/submit-application', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submissionData),
+      });
 
-    // TODO: Redirect to payment/checkout page
-    // window.location.href = '/checkout?package=' + packageType;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Submission failed');
+      }
 
-    setIsSubmitted(true);
-    reset();
+      const result = await response.json();
+      console.log('Application submitted:', result);
 
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000);
+      setIsSubmitted(true);
+      reset();
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setIsSubmitted(false), 5000);
+
+      // TODO: Redirect to Stripe checkout
+      // Will be implemented in the Stripe integration step
+    } catch (err) {
+      console.error('Submission error:', err);
+      setError(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.');
+    }
   };
 
   return (
     <div>
+      {/* Error Message */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 rounded-xl bg-red-50 border-2 border-red-500 p-6 flex items-center gap-4"
+        >
+          <AlertCircle className="h-8 w-8 text-red-500 flex-shrink-0" />
+          <div>
+            <h3 className="font-semibold text-red-900 text-lg">Fehler</h3>
+            <p className="text-red-700">{error}</p>
+          </div>
+        </motion.div>
+      )}
 
       {/* Success Message */}
       {isSubmitted && (
