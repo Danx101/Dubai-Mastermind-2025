@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ApplicationPage from './pages/ApplicationPage';
+import AdminPage from './pages/AdminPage';
+import SuccessPage from './pages/SuccessPage';
 
 function App() {
   useEffect(() => {
@@ -23,6 +25,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/bewerbung" element={<ApplicationPage />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/success" element={<SuccessPage />} />
         </Routes>
       </div>
     </BrowserRouter>

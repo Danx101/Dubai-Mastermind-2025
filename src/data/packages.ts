@@ -10,7 +10,7 @@ export const packages: Record<'A' | 'B', PackageItem> = {
   A: {
     name: 'Paket A',
     subtitle: 'Basispaket',
-    price: 'XYZ',
+    price: '100',
     items: [
       '3 Tage Intensiv-Kurs',
       'Individuelles Coaching und Feedback',
@@ -20,7 +20,7 @@ export const packages: Record<'A' | 'B', PackageItem> = {
   B: {
     name: 'Paket B',
     subtitle: 'Premium-Paket',
-    price: 'XYZ',
+    price: '200',
     items: [
       'Unterkunft in der Event-Location',
       'Exklusiver Zugang zu Premium-Bereichen',

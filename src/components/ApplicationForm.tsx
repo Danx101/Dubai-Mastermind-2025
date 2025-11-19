@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, AlertCircle } from 'lucide-react';
 import type { PackageType } from '../data/packages';
 
 const formSchema = z.object({
@@ -23,14 +23,12 @@ interface ApplicationFormProps {
 }
 
 export default function ApplicationForm({ packageType, quantity }: ApplicationFormProps) {
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
@@ -63,14 +61,26 @@ export default function ApplicationForm({ packageType, quantity }: ApplicationFo
       const result = await response.json();
       console.log('Application submitted:', result);
 
-      setIsSubmitted(true);
-      reset();
+      // Create Stripe checkout session
+      const checkoutResponse = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          applicationId: result.applicationId,
+          packageType: packageType,
+          quantity: quantity,
+          email: data.email,
+        }),
+      });
 
-      // Reset success message after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
+      if (!checkoutResponse.ok) {
+        throw new Error('Failed to create checkout session');
+      }
 
-      // TODO: Redirect to Stripe checkout
-      // Will be implemented in the Stripe integration step
+      const checkoutData = await checkoutResponse.json();
+
+      // Redirect to Stripe Checkout
+      window.location.href = checkoutData.url;
     } catch (err) {
       console.error('Submission error:', err);
       setError(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.');
@@ -90,23 +100,6 @@ export default function ApplicationForm({ packageType, quantity }: ApplicationFo
           <div>
             <h3 className="font-semibold text-red-900 text-lg">Fehler</h3>
             <p className="text-red-700">{error}</p>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Success Message */}
-      {isSubmitted && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 rounded-xl bg-green-50 border-2 border-green-500 p-6 flex items-center gap-4"
-        >
-          <CheckCircle className="h-8 w-8 text-green-500 flex-shrink-0" />
-          <div>
-            <h3 className="font-semibold text-green-900 text-lg">Bewerbung erfolgreich eingereicht!</h3>
-            <p className="text-green-700">
-              Vielen Dank für deine Bewerbung. Wir werden uns in Kürze bei dir melden.
-            </p>
           </div>
         </motion.div>
       )}
