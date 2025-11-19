@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getAdminNotificationEmail, getApplicantConfirmationEmail } from './email-templates';
+import { getAdminNotificationEmail, getApplicantConfirmationEmail } from './email-templates.js';
 
 // Initialize clients
 const supabase = createClient(
